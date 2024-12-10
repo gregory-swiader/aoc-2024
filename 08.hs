@@ -3,23 +3,23 @@
 import Data.Function (on)
 import Data.List (groupBy, nub, sortBy, subsequences)
 
-data Point = Cell
+data Point = Point
   { x :: Int,
     y :: Int
   }
   deriving (Eq, Show)
 
 (<+>) :: Point -> Point -> Point
-(<+>) p q = Cell (x p + x q) (y p + y q)
+(<+>) p q = Point (x p + x q) (y p + y q)
 
 (<->) :: Point -> Point -> Point
-(<->) p q = Cell (x p - x q) (y p - y q)
+(<->) p q = Point (x p - x q) (y p - y q)
 
 (</>) :: Point -> Int -> Point
-(</>) p d = Cell (x p `div` d) (y p `div` d)
+(</>) p d = Point (x p `div` d) (y p `div` d)
 
 (<%>) :: Point -> Int -> Point
-(<%>) p m = Cell (x p `mod` m) (y p `mod` m)
+(<%>) p m = Point (x p `mod` m) (y p `mod` m)
 
 within :: Point -> Point -> Bool
 within p dim = 0 <= x p && x p < x dim && 0 <= y p && y p < y dim
@@ -37,7 +37,7 @@ groupUnsortedBy pred = groupBy (comb same pred) . sortBy pred
 readInput :: String -> (Point, [[(Point, Char)]])
 readInput s = (dims, antennas)
   where
-    dims = Cell (length . lines $ s) (length . head . lines $ s)
+    dims = Point (length . lines $ s) (length . head . lines $ s)
     antennas = groupAntennas . findAntennas $ lines s
     groupAntennas = groupUnsortedBy (compare `on` snd)
     findAntennas = concatMap (filter ((/= '.') . snd)) . zipWithPoint

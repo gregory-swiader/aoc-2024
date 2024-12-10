@@ -1,0 +1,10 @@
+# build artifacts
+*.hi
+*.o
+
+# executables
+[0-9]
+[0-9][0-9]
+
+# guess what
+inputs
